@@ -194,8 +194,8 @@ This project contains the following artifacts:
 
 * `DEVELOPING.md`, a short guide for developing LoopBack applications in an IDE
 * `README.md`, an overview of how the project was generated
-* `index.js`, a top level file connecting components of the application
-* `index.ts`, allows importing contents of the src folder for use elsewhere
+* `index.js`, a top level file file used by Node.js  
+* `index.ts`, a top level file used by Typescript 
 * `package-lock.json`, the application's npm dependency tree
 * `package.json`, the application's package manifest
 * `public`, folder, containing static assets
