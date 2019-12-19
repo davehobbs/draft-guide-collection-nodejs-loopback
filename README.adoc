@@ -200,7 +200,7 @@ This project contains the following artifacts:
 * `package.json`, the application's package manifest
 * `public`, folder, containing static assets
 * `src`, folder, containing application source code
-* `tsconfig.json`, a typescript configuration file
+* `tsconfig.json`, a Typescript configuration file
 
 // =================================================================================================
 // Running the Appsody development environment
@@ -235,7 +235,7 @@ image::/img/guide/collection-nodejs-loopback-splashscreen.png[link="/img/guide/c
 
 You are now ready to begin developing your application.
 
-== Creating and updating the application
+== Updating the application
 
 The basic application created by the project initialization defines one API endpoint `/ping`. 
 
@@ -246,11 +246,11 @@ Browse to http://localhost:3000/ping/ to call the ping API. You should see the g
 {"greeting":"Hello from LoopBack","date":"2019-12-18T15:59:18.118Z","url":"/ping","headers": ...
 ----
 
-Edit the `src/controllers/ping.controller.ts` file and change the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in Kabanero!`
+Edit the `src/controllers/ping.controller.ts` file. Change the text of the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in Kabanero!`
 
 Save the change.
 
-Appsody watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which starts with the greeting *Hello from LoopBack running in Kabanero!*
+Appsody watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which displays the greeting *Hello from LoopBack running in Kabanero!*
 
 If your application is currently running under Appsody control, you can stop it with `Ctrl+C`, or by running the command `appsody stop` from another terminal.
 
