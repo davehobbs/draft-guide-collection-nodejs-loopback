@@ -10,7 +10,7 @@ permalink: /guides/collection-nodejs-loopback/
 = Developing cloud native microservice applications with the Kabanero Node.js LoopBack Collection and Appsody CLI.
 
 //
-//	Copyright 2019 IBM Corporation and others.
+//	Copyright 2019, 2020 IBM Corporation and others.
 //
 //	Licensed under the Apache License, Version 2.0 (the "License");
 //	you may not use this file except in compliance with the License.
@@ -77,7 +77,7 @@ Other options include link:https://www.okd.io/minishift/[Minishift, window=_blan
 you make a private copy of the Kabanero Collection Hub and use it in the same way. However, this demonstration does
 not require that you make your own copy.
 
-Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.3.0.
+Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.5.0.
 
 . To check the repositories that Appsody can already access, run the following command:
 +
@@ -94,11 +94,11 @@ NAME        URL
 *incubator https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
 ----
 +
-. Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.3.0. Run the following command to add the Kabanero index:
+. Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.5.0. Run the following command to add the Kabanero index:
 +
 [role="command"]
 ----
-appsody repo add kabanero https://github.com/kabanero-io/collections/releases/download/0.3.0/kabanero-index.yaml
+appsody repo add kabanero https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
 ----
 +
 . Check the repositories again by running `appsody repo list` to see that the Kabanero repository was added:
@@ -107,7 +107,7 @@ appsody repo add kabanero https://github.com/kabanero-io/collections/releases/do
 ----
 NAME        URL
 *incubator https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
-kabanero    https://github.com/kabanero-io/collections/releases/download/0.3.0/kabanero-index.yaml
+kabanero    https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
 ----
 +
 In this example, the asterisk (*) shows that `incubator` is the default repository. Run the following command to set the Kabanero index as the default repository:
@@ -123,7 +123,7 @@ appsody repo set-default kabanero
 ----
 NAME        URL
 incubator  https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
-*kabanero   https://github.com/kabanero-io/collections/releases/download/0.3.0/kabanero-index.yaml
+*kabanero   https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
 ----
 +
 . *Recommendation*: In enterprise settings, when a solution architect creates application stacks with
@@ -141,7 +141,7 @@ appsody repo remove incubator
 [source, role='no_copy']
 ----
 NAME     	URL
-*kabanero	https://github.com/kabanero-io/collections/releases/download/0.3.0/kabanero-index.yaml
+*kabanero	https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
 ----
 
 Your Appsody CLI is now configured to use the Kabanero Collections. Next, you need to initialize your project.
@@ -173,18 +173,18 @@ The output from the command is similar to the following example:
 [source, role='no_copy']
 ----
 Running appsody init...
-Downloading nodejs-loopback template project from https://github.com/kabanero-io/collections/releases/download/0.3.0/incubator.nodejs-loopback.v0.1.6.templates.scaffold.tar.gz
-Download complete. Extracting files from /Users/suechaplain/appsody/simple-nodejs-loopback/nodejs-loopback.tar.gz
+Downloading nodejs-loopback template project from https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs-loopback.v0.1.6.templates.scaffold.tar.gz
+Download complete. Extracting files from /Users/user1/appsody/simple-nodejs-loopback/nodejs-loopback.tar.gz
 Setting up the development environment
 Your Appsody project name has been set to simple-nodejs-loopback
-Pulling docker image kabanero/nodejs-loopback:0.1
-Running command: docker pull kabanero/nodejs-loopback:0.1
-0.1: Pulling from kabanero/nodejs-loopback
+Pulling docker image kabanero/nodejs-loopback:0.1.6
+Running command: docker pull kabanero/nodejs-loopback:0.1.6
+0.1.6: Pulling from kabanero/nodejs-loopback
 ..
 26ad3cb5cc5c: Pull complete
 Digest: sha256:cca31a10f825c0ae7785681b21189921b12c88b4260ff17558f39c0093e1625d
-Status: Downloaded newer image for kabanero/nodejs-loopback:0.1
-docker.io/kabanero/nodejs-loopback:0.1
+Status: Downloaded newer image for kabanero/nodejs-loopback:0.1.6
+docker.io/kabanero/nodejs-loopback:0.1.6
 [Warning] The stack image does not contain APPSODY_PROJECT_DIR. Using /project
 Running command: docker run --rm --entrypoint /bin/bash kabanero/nodejs-loopback:0.1 -c find /project -type f -name .appsody-init.sh
 Successfully initialized Appsody project
