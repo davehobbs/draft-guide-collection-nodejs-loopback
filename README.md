@@ -1,14 +1,20 @@
 ---
 permalink: /guides/collection-nodejs-loopback/
+layout: guide-markdown
+title: Developing microservice apps with the Node.js Loopback application stack
+duration: 40 minutes
+releasedate: 2020-01-27
+description: Learn how to create, run, update, deploy, and deliver a simple cloud native application using the Node.js Loopback application stack.
+tags: ['stack', 'Node.js']
+guide-category: collections
 ---
-:page-layout: guide
-:page-duration: 20 minutes
-:page-releasedate: 2019-12-19
-:page-description: Learn how to create, run, update, deploy, and deliver a simple cloud native application using the Kabanero Node.js LoopBack Collection
-:page-tags: ['Collection', 'Node.js', 'LoopBack']
-:page-guide-category: collections
-= Developing cloud native microservice applications with the Kabanero Node.js LoopBack Collection and Appsody CLI.
 
+<!-- Note:
+> This repository contains the guide documentation source. To view
+> the guide in published form, view it on the [website](https://kabanero.io/guides/{projectid}.html).
+-->
+
+<!--
 //
 //	Copyright 2019, 2020 IBM Corporation and others.
 //
@@ -24,154 +30,148 @@ permalink: /guides/collection-nodejs-loopback/
 //	See the License for the specific language governing permissions and
 //	limitations under the License.
 //
+-->
 
-[.hidden]
-NOTE: This repository contains the guide documentation source. To view
-the guide in published form, view it on the https://kabanero.io/guides/{projectid}.html[website].
-
+<!--
 // =================================================================================================
 // What you'll learn
 // =================================================================================================
+-->
 
-== What you will learn
+## What you will learn
 
 In this guide, you’ll learn how to create and run a simple cloud native microservice. Then, you’ll update the microservice that you created and deploy it to
-Kubernetes or Knative. This process will be done by using the Kabanero Node.js LoopBack Collection with the link:https://appsody.dev/docs/using-appsody/cli-commands[Appsody CLI, window=_blank].
-Deployment to Knative is optional depending on whether you want to Scale to Zero.
+Kubernetes or Knative. This process will be done by using the Node.js LoopBack application stack. Deployment to Knative is optional depending on whether you want to Scale to Zero.
 
-Kabanero’s Node.js LoopBack Collection provides an application stack that enables the development and optimization of microservices.
+The Node.js LoopBack application stack provides an application stack that enables the development and optimization of microservices.
 With application stacks, developers don’t need to manage full software development stacks or be experts on underlying container
 technologies or Kubernetes. Application stacks are customized for specific enterprises to incorporate their company standards
 and technology choices.
 
 Applications in this guide are written based on the LoopBack API specifications, built and run with Node.js, and deployed to Kubernetes through a modern DevOps toolchain that is triggered in Git.
 
+<!--
 // =================================================================================================
 // Prerequisites
 // =================================================================================================
+-->
 
-== Prerequisites
+## Prerequisites
 
-. https://docs.docker.com/get-started/[Docker] must be installed.
-. https://appsody.dev/docs/getting-started/installation[Appsody, window=_blank] must be installed.
-. *Optional:* If you have a repository that contains a set of custom collections, you need the URL for the `index.yaml` file. Use this URL
-to make your custom collections available with the Appsody CLI.
-. *Optional*: If you are testing multiple microservices together, you must have access to a local Kubernetes cluster for local development.
+- [Docker](https://docs.docker.com/get-started/) must be installed.
+- [Appsody](https://appsody.dev/docs/getting-started/installation) must be installed.
+- *Optional:* If your organisation has customized application stacks, you need the URL that points to the `index.yaml` file for the stack hub.
+- *Optional*: If you are testing multiple microservices together, you must have access to a local Kubernetes cluster for local development.
 If you are using Docker Desktop, you can enable Kubernetes from the menu by selecting *Preferences* -> *Kubernetes* -> *Enable Kubernetes*.
-Other options include link:https://www.okd.io/minishift/[Minishift, window=_blank] or link:https://kubernetes.io/docs/setup/learning-environment/minikube/[Minikube].
+Other options include [Minishift](https://www.okd.io/minishift/) or [Minikube](https://kubernetes.io/docs/setup/learning-environment/minikube/).
 
-
+<!--
 // =================================================================================================
 // Getting started
 // =================================================================================================
 
-== Getting started
+## Getting started
 
+<!--
 // =================================================================================================
-// Configuring Appsody
+// Configuring your development environment
 // =================================================================================================
+-->
 
-=== *Configuring Appsody*
+### Configuring your development environment
 
-*Note:* The use of the public Kabanero Collection Hub is only for the purposes of this guide. It is recommended that
-you make a private copy of the Kabanero Collection Hub and use it in the same way. However, this demonstration does
-not require that you make your own copy.
+To check the repositories that you can already access, run the following command:
 
-Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.5.0.
-
-. To check the repositories that Appsody can already access, run the following command:
-+
-[role="command"]
-----
+```
 appsody repo list
-----
-+
+```
+
 You see output similar to the following example:
-+
-[source, role='no_copy']
-----
+
+```
 NAME        URL
 *incubator https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
-----
-+
-. Add your Kabanero index to the Appsody CLI. The following example uses the public index for Kabanero Version 0.5.0. Run the following command to add the Kabanero index:
-+
-[role="command"]
-----
-appsody repo add kabanero https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
-----
-+
-. Check the repositories again by running `appsody repo list` to see that the Kabanero repository was added:
-+
-[source, role='no_copy']
-----
+```
+
+Next, run the following command to add the URL for your stack hub index file:
+
+```
+appsody repo add <my-org-stack> <URL>
+```
+
+where `<my-org-stack>` is the repository name for your stack hub and `<URL>` is the URL for
+your stack hub index file.
+
+**Note:** If you do not have a stack hub that contains customized, pre-configured application stacks, you can skip to
+[Initializing your project](#initializing-your-project) and develop your app based on the public application stack
+for Node.js Express.
+
+Check the repositories again by running `appsody repo list` to see that your stack hub was added. In the
+following examples, the stack hub is called `abc-stacks` and the URL is `https://github.com/abc.inc/stacks/index.yaml`:
+
+```
 NAME        URL
 *incubator https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
-kabanero    https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
-----
-+
-In this example, the asterisk (*) shows that `incubator` is the default repository. Run the following command to set the Kabanero index as the default repository:
-+
-[role="command"]
-----
-appsody repo set-default kabanero
-----
-+
-. Check the available repositories again by running `appsody repo list` to see that the default is updated:
-+
-[source, role='no_copy']
-----
+abc-stacks https://github.com/abc.inc/stacks/index.yaml
+```
+
+In this example, the asterisk (\*) shows that `incubator` is the default repository. Run the following command to set `abc-stacks`
+as the default repository:
+
+```
+appsody repo set-default abc-stacks
+```
+
+Check the available repositories again by running `appsody repo list` to see that the default is updated:
+
+```
 NAME        URL
-incubator  https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
-*kabanero   https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
-----
-+
-. *Recommendation*: In enterprise settings, when a solution architect creates application stacks with
-technology choices that are in a private Collection Hub, it's best to remove `incubator` from the list.
-These Appsody stacks are not supported by the Kabanero application cluster. Run the following command
-to remove the `incubator` repository:
-+
-[role="command"]
-----
+incubator https://github.com/appsody/stacks/releases/latest/download/incubator-index.yaml
+*abc-stacks https://github.com/abc.inc/stacks/index.yaml
+```
+
+**Recommendation**: To avoid initializing projects that are based on the public application stacks, it's best
+to remove `incubator` from the list. Run the following command to remove the `incubator` repository:
+
+
+```
 appsody repo remove incubator
-----
-+
-. Check the available repositories again by running `appsody repo list` to see that `incubator` is removed:
-+
-[source, role='no_copy']
-----
+```
+
+Check the available repositories again by running `appsody repo list` to see that `incubator` is removed:
+
+
+```
 NAME     	URL
-*kabanero	https://github.com/kabanero-io/collections/releases/download/0.5.0/kabanero-index.yaml
-----
+*abc-stacks https://github.com/abc.inc/stacks/index.yaml
+```
 
-Your Appsody CLI is now configured to use the Kabanero Collections. Next, you need to initialize your project.
+Your development environment is now configured to use your customized application stacks. Next, you need to initialize your project.
 
-
+<!--
 // =================================================================================================
 // Initializing your project
 // =================================================================================================
+-->
 
-=== *Initializing your project*
+### Initializing your project*
 
-. First, create a directory that will contain the project:
-+
-[role="command"]
-----
+First, create a directory that will contain the project:
+
+```
 mkdir -p ~/projects/simple-nodejs-loopback
 cd ~/projects/simple-nodejs-loopback
-----
-+
-. Run the following command to initialize your Node.js LoopBack project with the Appsody CLI:
-+
-[role="command"]
-----
+```
+
+Run the following command to initialize your Node.js LoopBack project:
+
+```
 appsody init nodejs-loopback
-----
-+
+```
+
 The output from the command is similar to the following example:
-+
-[source, role='no_copy']
-----
+
+```
 Running appsody init...
 Downloading nodejs-loopback template project from https://github.com/kabanero-io/collections/releases/download/0.5.0/incubator.nodejs-loopback.v0.1.6.templates.scaffold.tar.gz
 Download complete. Extracting files from /Users/user1/appsody/simple-nodejs-loopback/nodejs-loopback.tar.gz
@@ -188,46 +188,46 @@ docker.io/kabanero/nodejs-loopback:0.1.6
 [Warning] The stack image does not contain APPSODY_PROJECT_DIR. Using /project
 Running command: docker run --rm --entrypoint /bin/bash kabanero/nodejs-loopback:0.1 -c find /project -type f -name .appsody-init.sh
 Successfully initialized Appsody project
-----
+```
 
 Your new project is created, built, and started inside a container.
 
-== Understanding the project layout
+## Understanding the project layout
 
 For context, the following image displays the structure of the project that you’re working on:
 
-image::/img/guide/collection-nodejs-loopback-project-layout.png[link="/img/guide/collection-nodejs-loopback-project-layout.png" alt="Project structure"]
+![Project structure](/img/guide/collection-nodejs-loopback-project-layout.png)
 
 This project contains the following artifacts:
 
-* `DEVELOPING.md`, a short guide for developing LoopBack applications in an IDE
-* `README.md`, an overview of how the project was generated
-* `index.js`, a top level file file used by Node.js
-* `index.ts`, a top level file used by Typescript
-* `package-lock.json`, the application's npm dependency tree
-* `package.json`, the application's package manifest
-* `public`, folder, containing static assets
-* `src`, folder, containing application source code
-* `tsconfig.json`, a Typescript configuration file
+- `DEVELOPING.md`, a short guide for developing LoopBack applications in an IDE
+- `README.md`, an overview of how the project was generated
+- `index.js`, a top level file file used by Node.js
+- `index.ts`, a top level file used by Typescript
+- `package-lock.json`, the application's npm dependency tree
+- `package.json`, the application's package manifest
+- `public`, folder, containing static assets
+- `src`, folder, containing application source code
+- `tsconfig.json`, a Typescript configuration file
 
+<!--
 // =================================================================================================
-// Running the Appsody development environment
+// Running the development environment
 // =================================================================================================
+-->
 
-== Running the Appsody development environment
+== Running the development environment
 
-. Run the following command to start the Appsody development environment:
-+
-[role="command"]
-----
+Run the following command to start the development environment:
+
+```
 appsody run
-----
-+
-The Appsody CLI launches a local Docker image that contains the Node.js Loopback runtime environment that hosts the microservice.
+```
+
+The CLI launches a local Docker image that contains the Node.js Loopback runtime environment that hosts the microservice.
 After some time, you see a message similar to the following example:
-+
-[source, role='no_copy']
-----
+
+```
 [Container] Running command:  npm start
 [Container]
 [Container] > nodejs-loopback@0.1.6 start /project
@@ -235,35 +235,36 @@ After some time, you see a message similar to the following example:
 [Container]
 [Container] Server is running at http://[::1]:3000
 [Container] Try http://[::1]:3000/ping
-----
-+
+```
+
 This message indicates that the project is started. Browse to http://localhost:3000 and you can see the LoopBack splash screen,
 as shown in the following image:
 
-image::/img/guide/collection-nodejs-loopback-splashscreen.png[link="/img/guide/collection-nodejs-loopback-splashscreen.png" alt="Project structure"]
+![Loopback splash screen](img/guide/collection-nodejs-loopback-splashscreen.png)
 
 == Updating the application
 
 The basic application created by the project initialization defines one API endpoint `/ping`.
 
 . Browse to http://localhost:3000/ping/ to call the ping API. You should see the greeting `Hello from LoopBack` at the beginning of the content, in a similar format to the following output:
-+
-[source, role='no_copy']
-----
+
+```
 {"greeting":"Hello from LoopBack","date":"2019-12-18T15:59:18.118Z","url":"/ping","headers": ...
-----
-+
-. Edit the `src/controllers/ping.controller.ts` file. Change the text of the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in Kabanero!`
-+
-. Save the change.
+```
 
-Appsody watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which displays the greeting *Hello from LoopBack running in Kabanero!*
+Edit the `src/controllers/ping.controller.ts` file. Change the text of the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in Kabanero!`
 
-If your application is currently running under Appsody control, you can stop it with `Ctrl+C`, or by running the command `appsody stop` from another terminal.
+Save the change.
 
+The development environment watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which displays the greeting *Hello from LoopBack running in Kabanero!*
+
+If your application is currently running, you can stop it with `Ctrl+C`, or by running the command `appsody stop` from another terminal.
+
+<!--
 // =================================================================================================
 // Testing the application
 // =================================================================================================
+-->
 
 == Testing the application
 
@@ -273,70 +274,65 @@ You can choose how you want to deploy the system and application. If you have ad
 
 You can also deploy the system, application, and the associated services in a private namespace on a development cluster. From this private namespace, you can commit the microservices in Git repositories and deploy them through a DevOps pipeline, not directly to Kubernetes.
 
-=== Testing locally on Kubernetes
+### Testing locally on Kubernetes
 
-After you finish writing your application code, the Appsody CLI makes it easy to deploy directly to a Kubernetes cluster for further local testing.
+After you finish writing your application code, the CLI makes it easy to deploy directly to a Kubernetes cluster for further local testing.
  The ability to deploy directly to a Kubernetes cluster is valuable when you want to test multiple microservices together or test with services that the application requires.
 
-. Ensure that your `kubectl` command is configured with cluster details and run the following command to deploy the application:
-+
-[role="command"]
-----
+Ensure that your `kubectl` command is configured with cluster details and run the following command to deploy the application:
+
+```
 appsody deploy
-----
-+
+```
+
 This command builds a new Docker image that is optimized for production deployment and deploys the image to your local Kubernetes cluster.
 After some time you see a message similar to the following example:
-+
-[source, role='no_copy']
-----
+
+```
 Deployed project running at http://localhost:30262
-----
-+
-. Run the following command to check the status of the application pods:
-+
-[role="command"]
-----
+```
+Run the following command to check the status of the application pods:
+
+```
 kubectl get pods
-----
-+
+```
+
 In the following example output, you can see that a `simple-nodejs-loopback` pod is running:
-+
-[source, role='no_copy']
-----
+
+```
 NAME                                    READY   STATUS    RESTARTS   AGE
 appsody-operator-6bbddbd455-nfhnm        1/1     Running   0          26d
 simple-nodejs-loopback-775b655768-lqn6q  1/1     Running   0          3m10s
-----
-+
+```
+
 After the `simple-nodejs-loopback` pod starts, go to the URL that was returned when you ran the `appsody deploy` command,
-and you see the Appsody microservice splash screen. To see the response from your application, point your browser to
+and you see the splash screen. To see the response from your application, point your browser to
 the `<URL_STRING>/example` URL, where `<URL_STRING>` is the URL that was returned. For example, http://localhost:30262
 was returned in the previous example. Go to the http://localhost:30262/example URL to see the deployed application response.
-+
-. Use the following command to stop the deployed application:
-+
-[role="command"]
-----
+
+Use the following command to stop the deployed application:
+
+```
 appsody deploy delete
-----
-+
+
+```
 After you run this command and the deployment is deleted, you see the following message:
-+
-[source, role='no_copy']
-----
+
+```
 Deployment deleted
-----
+```
 
-=== Testing with Knative serving
+### Testing with Knative serving
 
-You can choose to test an application that is deployed with Knative Serving to take advantage of Scale to Zero. Not all applications can be written to effectively take advantage of Scale to Zero. The Kabanero operator-based installation configures Knative on the Kubernetes cluster, specifically OKD 3.11. Because of the resources that are required to run Knative and its dependencies, testing locally can be difficult. Publish to Kubernetes by using pipelines that are described later in the guide. Your operations team can configure the pipelines so that Knative Serving is enabled for deployment.
+You can choose to test an application that is deployed with Knative Serving to take advantage of Scale to Zero. Not all applications can be written to effectively take advantage of Scale to Zero. The Kabanero operator-based installation configures Knative on the Kubernetes cluster. Because of the resources that are required to run Knative and its dependencies, testing locally can be difficult. Publish to Kubernetes by using pipelines that are described later in the guide. Your operations team can configure the pipelines so that Knative Serving is enabled for deployment.
 
+<!--
 // =================================================================================================
 // Publishing to Kubernetes by using pipelines
 // =================================================================================================
+-->
 
-== Publishing to Kubernetes by using pipelines
+## Publishing to Kubernetes by using pipelines
 
 After you develop and test your application in your local environment, it’s time to publish it to your enterprise’s pipeline. From your enterprise’s pipeline, you can deploy the application to the appropriate Kubernetes cluster for staging or production. Complete this process in Git.
 
