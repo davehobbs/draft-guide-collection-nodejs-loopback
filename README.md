@@ -69,6 +69,7 @@ Other options include [Minishift](https://www.okd.io/minishift/) or [Minikube](h
 // =================================================================================================
 // Getting started
 // =================================================================================================
+-->
 
 ## Getting started
 
@@ -130,7 +131,7 @@ incubator https://github.com/appsody/stacks/releases/latest/download/incubator-i
 *abc-stacks https://github.com/abc.inc/stacks/index.yaml
 ```
 
-**Recommendation**: To avoid initializing projects that are based on the public application stacks, it's best
+**Recommendation** To avoid initializing projects that are based on the public application stacks, it's best
 to remove `incubator` from the list. Run the following command to remove the `incubator` repository:
 
 
@@ -154,7 +155,7 @@ Your development environment is now configured to use your customized applicatio
 // =================================================================================================
 -->
 
-### Initializing your project*
+### Initializing your project
 
 First, create a directory that will contain the project:
 
@@ -216,7 +217,7 @@ This project contains the following artifacts:
 // =================================================================================================
 -->
 
-== Running the development environment
+## Running the development environment
 
 Run the following command to start the development environment:
 
@@ -240,7 +241,7 @@ After some time, you see a message similar to the following example:
 This message indicates that the project is started. Browse to http://localhost:3000 and you can see the LoopBack splash screen,
 as shown in the following image:
 
-![Loopback splash screen](img/guide/collection-nodejs-loopback-splashscreen.png)
+![Browser showing Loopback splash screen](img/guide/collection-nodejs-loopback-splashscreen.png)
 
 == Updating the application
 
@@ -252,11 +253,11 @@ The basic application created by the project initialization defines one API endp
 {"greeting":"Hello from LoopBack","date":"2019-12-18T15:59:18.118Z","url":"/ping","headers": ...
 ```
 
-Edit the `src/controllers/ping.controller.ts` file. Change the text of the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in Kabanero!`
+Edit the `src/controllers/ping.controller.ts` file. Change the text of the greeting in the `ping` object in the `PingController` class from `Hello from LoopBack` to `Hello from LoopBack running in a microservice!`
 
 Save the change.
 
-The development environment watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which displays the greeting *Hello from LoopBack running in Kabanero!*
+The development environment watches for file changes and automatically updates your application. Point your browser to http://localhost:3000/ping to see the new output, which displays the greeting **Hello from LoopBack running in a microservice!**.
 
 If your application is currently running, you can stop it with `Ctrl+C`, or by running the command `appsody stop` from another terminal.
 
@@ -266,7 +267,7 @@ If your application is currently running, you can stop it with `Ctrl+C`, or by r
 // =================================================================================================
 -->
 
-== Testing the application
+## Testing the application
 
 If you are building an application that is composed of microservices, you need to test within the context of the overall system. First, test your application and perform unit testing in isolation. To test the application as part of the system, deploy the system and then the new application.
 
