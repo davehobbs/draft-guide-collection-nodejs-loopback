@@ -40,7 +40,7 @@ guide-category: collections
 
 ## What you will learn
 
-In this guide, you’ll learn how to create and run a simple cloud native microservice based the Node.js LoopBack application stack. You’ll learn how to configure your development environment, update the microservice that you created and deploy it to Kubernetes or serverless. Deployment to serverless is optional depending on whether you want to Scale to Zero.
+In this guide, you’ll learn how to create and run a simple cloud native microservice based on the Node.js LoopBack application stack. You’ll learn how to configure your development environment, update the microservice that you created and deploy it to Kubernetes or serverless. Deployment to serverless is optional depending on whether you want to Scale to Zero.
 
 The Node.js LoopBack application stack enables the development and optimization of microservices.
 With application stacks, developers don’t need to manage full software development stacks or be experts on underlying container
