@@ -105,7 +105,7 @@ your stack hub index file.
 
 **Note:** If you do not have a stack hub that contains customized, pre-configured application stacks, you can skip to
 [Initializing your project](#initializing-your-project) and develop your app based on the public application stack
-for Node.js.
+for Node.js Loopback.
 
 Check the repositories again by running `appsody repo list` to see that your stack hub was added. In the
 following examples, the stack hub is called `abc-stacks` and the URL is `https://github.com/abc.inc/stacks/index.yaml`:
